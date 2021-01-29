@@ -45,8 +45,8 @@ awk '{for (i=2; i<=NF; ++i) { print $i; gsub(/[0-9]/, "", $i); print $i}}' $lexi
     > $nonsil_phones || exit 1;
 # A few extra questions that will be added to those obtained by automatically clustering
 # the "real" phones.  These ask about stress; there's also one for silence.
-cat $silence_phones| awk '{printf("%s ", $1);} END{printf "\n";}' > $extra_questions || exit 1;
-cat $nonsil_phones | perl -e 'while(<>){ foreach $p (split(" ", $_)) {
+< $silence_phones awk '{printf("%s ", $1);} END{printf "\n";}' > $extra_questions || exit 1;
+< $nonsil_phones perl -e 'while(<>){ foreach $p (split(" ", $_)) {
   $p =~ m:^([^\d]+)(\d*)$: || die "Bad phone $_"; $q{$2} .= "$p "; } } foreach $l (values %q) {print "$l\n";}' \
   >> $extra_questions || exit 1;
 echo "$(wc -l <$silence_phones) silence phones saved to: $silence_phones"

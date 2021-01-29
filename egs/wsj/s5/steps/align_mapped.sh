@@ -22,7 +22,7 @@ careful=false
 boost_silence=1.0 # Factor by which to boost silence during alignment.
 # End configuration options.
 
-echo "$0 $@"  # Print the command line for logging
+echo "$0 $*"  # Print the command line for logging
 
 [ -f path.sh ] && . ./path.sh # source the path.
 . parse_options.sh || exit 1;
@@ -49,7 +49,7 @@ for f in $data/text $lang/oov.int $srcdir/tree $srcdir/final.mdl; do
   [ ! -f $f ] && echo "$0: expected file $f to exist" && exit 1;
 done
 
-oov=`cat $lang/oov.int` || exit 1;
+oov=$(cat $lang/oov.int) || exit 1;
 mkdir -p $dir/log
 echo $nj > $dir/num_jobs
 sdata=$data/split${nj}
@@ -70,7 +70,7 @@ if [ ! -z "$graphs" ]; then
     echo "Could not find graphs $graphs" && exit 1
   fi
 
-  [ $nj != "`cat $graphs/num_jobs`" ] && echo "$0: mismatch in num-jobs" && exit 1;
+  [ $nj != "$(cat $graphs/num_jobs)" ] && echo "$0: mismatch in num-jobs" && exit 1;
   [ ! -f $graphs/fsts.1.gz ] && echo "$0: no such file $graphs/fsts.1.gz" && exit 1;
 
   $cmd JOB=1:$nj $dir/log/align.JOB.log \

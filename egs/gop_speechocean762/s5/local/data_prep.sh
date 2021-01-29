@@ -16,7 +16,7 @@ split_num=$3
 [ ! -d $src ] && echo "$0: no such directory $src" && exit 1;
 [ ! -d $src/../WAVE ] && echo "$0: no wav directory" && exit 1;
 
-wavedir=`realpath $src/../WAVE`
+wavedir=$(realpath $src/../WAVE)
 
 [ -d $dst ] || mkdir -p $dst || exit 1;
 
